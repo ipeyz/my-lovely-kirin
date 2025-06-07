@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>To Raisya - Rainy Letter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap');
+
+  body {
+    margin: 0; 
+    padding: 0; 
+    overflow-x: hidden;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    color: white;
+    height: 100vh;
+    position: relative;
+  }
+
+  /* Moon */
+  .moon {
+    position: fixed;
+    top: 50px;
+    right: 100px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at 30% 30%, #fdf6e3, #f5deb3);
+    border-radius: 50%;
+    box-shadow: 0 0 100px 30px #fdf6e3;
+    z-index: 1;
+  }
+
+  /* Flying Bird */
+  .bird {
+    position: fixed;
+    top: 120px;
+    left: -80px;
+    width: 60px;
+    height: 60px;
+    z-index: 5;
+    animation: flyAcross 15s linear infinite;
+    opacity: 0.9;
+  }
+  @keyframes flyAcross {
+    0% { transform: translateX(0) scale(1) rotate(0deg); top: 120px; }
+    50% { transform: translateX(50vw) scale(1.1) rotate(10deg); top: 100px; }
+    100% { transform: translateX(100vw) scale(1) rotate(0deg); top: 120px; }
+  }
+
+  /* Letter container */
+  .letter-box {
+    position: relative;
+    margin: 150px auto 100px;
+    width: 90%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+  .letter-box h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .letter-box p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    text-align: justify;
+  }
+
+  /* Audio controls */
+  audio {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+  }
+
+  /* Raindrop styles */
+  .raindrop {
+    position: fixed;
+    top: -20px;
+    width: 2px;
+    height: 15px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255,255,255,0));
+    border-radius: 50% / 100%;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: fall linear forwards;
+    filter: drop-shadow(0 0 1px rgba(255,255,255,0.6));
+    z-index: 20;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="moon"></div>
+
+  <div class="bird">
+    <svg viewBox="0 0 64 64" width="60" height="60" fill="white" xmlns="http://www.w3.org/2000/svg" >
+      <path d="M2 32c10-10 20-10 30 0 10-10 20-10 30 0-10 10-20 10-30 0-10 10-20 10-30 0z" />
+    </svg>
+  </div>
+
+  <div class="letter-box">
+    <h1>To Raisya,</h1>
+    <p>From the moment I got to know you, something in my world changed. It’s hard to explain, but your presence brings a kind of calm and happiness I didn’t know I needed.</p>
+    <p>Texting you was the best thing I could've done. It has the power to make my worst days better and my good days even brighter. And the way you carry yourself, with such grace and kindness, inspires me more than you’ll ever know.</p>
+    <p>I may not always have the perfect words, but please know this: you mean a lot to me. I admire you not just for your beauty, but for your heart, your thoughts, and the way you make people around you feel seen and appreciated.</p>
+    <p>If I could make one wish, it would be to always be someone who makes you feel cherished, respected, and truly happy. No pressure, no expectations just me being here for you, in the most sincere way.</p>
+    <p>You’re special, Raisya. And I hope this little letter makes you smile, even just a little.</p>
+  </div>
+
+  <audio controls autoplay loop>
+    <source src="your-music-file.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Create raindrops with random positions, speeds and delays
+    function createRaindrop() {
+      const drop = document.createElement('div');
+      drop.classList.add('raindrop');
+      drop.style.left = Math.random() * window.innerWidth + 'px';
+      const duration = Math.random() * 1 + 1.2; // 1.2 to 2.2 seconds fall time
+      drop.style.animationDuration = duration + 's';
+      drop.style.animationDelay = '0s'; // immediate start
+      drop.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+      document.body.appendChild(drop);
+      // Remove drop after animation ends to prevent DOM bloat
+      setTimeout(() => drop.remove(), duration * 1000);
+    }
+
+    // Create lots of raindrops rapidly for full effect
+    setInterval(createRaindrop, 30);
+  </script>
+
+</body>
+</html>
