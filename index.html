@@ -42,6 +42,7 @@
     animation: flyAcross 15s linear infinite;
     opacity: 0.9;
   }
+
   @keyframes flyAcross {
     0% { transform: translateX(0) scale(1) rotate(0deg); top: 120px; }
     50% { transform: translateX(50vw) scale(1.1) rotate(10deg); top: 100px; }
@@ -61,11 +62,13 @@
     backdrop-filter: blur(10px);
     z-index: 10;
   }
+
   .letter-box h1 {
     font-size: 32px;
     margin-bottom: 20px;
     text-align: center;
   }
+
   .letter-box p {
     font-size: 18px;
     line-height: 1.7;
@@ -103,6 +106,46 @@
       opacity: 0;
     }
   }
+
+  /* Falling Heart styles */
+  .heart {
+    position: fixed;
+    top: -30px;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(45deg);
+    animation: fallHeart linear forwards;
+    z-index: 25;
+    pointer-events: none;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+  }
+
+  .heart::before {
+    top: -10px;
+    left: 0;
+  }
+
+  .heart::after {
+    left: -10px;
+    top: 0;
+  }
+
+  @keyframes fallHeart {
+    to {
+      transform: translateY(110vh) rotate(45deg);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 <body>
@@ -130,22 +173,32 @@
   </audio>
 
   <script>
-    // Create raindrops with random positions, speeds and delays
+    // Raindrop effect
     function createRaindrop() {
       const drop = document.createElement('div');
       drop.classList.add('raindrop');
       drop.style.left = Math.random() * window.innerWidth + 'px';
-      const duration = Math.random() * 1 + 1.2; // 1.2 to 2.2 seconds fall time
+      const duration = Math.random() * 1 + 1.2;
       drop.style.animationDuration = duration + 's';
-      drop.style.animationDelay = '0s'; // immediate start
       drop.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
       document.body.appendChild(drop);
-      // Remove drop after animation ends to prevent DOM bloat
       setTimeout(() => drop.remove(), duration * 1000);
     }
 
-    // Create lots of raindrops rapidly for full effect
     setInterval(createRaindrop, 30);
+
+    // Heart effect
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      heart.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createHeart, 300);
   </script>
 
 </body>
